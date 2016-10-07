@@ -5,9 +5,11 @@ package com.javalab.beveragemachine;
  */
 public class BeverageMachine {
     private int[] coinValues;
+    private Product[] assortment;
 
-    public BeverageMachine(int[] coinValues) {
+    public BeverageMachine(int[] coinValues, Product[] assortment) {
         this.coinValues = coinValues;
+        this.assortment = assortment;
     }
 
     public boolean acceptCoin(int value) {
@@ -18,5 +20,15 @@ public class BeverageMachine {
         }
 
         return false;
+    }
+
+    public Product selectProduct(String productName) {
+        for (Product product : assortment) {
+            if (product.getName().equals(productName)) {
+                return product;
+            }
+        }
+
+        return null;
     }
 }

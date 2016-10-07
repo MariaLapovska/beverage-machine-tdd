@@ -4,18 +4,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Mariia Lapovska
  */
 public class BeverageMachineTest {
-    private final int[] coinValues = new int[] {1, 5, 10, 25, 50};
+    private final int[] coinValues = new int[]{1, 5, 10, 25, 50};
+    private final Product[] assortment = new Product[]{new Product("Tea", 25),
+            new Product("Coffee", 35),
+            new Product("Juice", 45)};
 
     private BeverageMachine beverageMachine;
 
     @Before
     public void setUp() {
-        beverageMachine = new BeverageMachine(coinValues);
+        beverageMachine = new BeverageMachine(coinValues, assortment);
     }
 
     @Test
@@ -26,5 +30,16 @@ public class BeverageMachineTest {
     @Test
     public void canDeclineCoin() {
         assertEquals(false, beverageMachine.acceptCoin(7));
+    }
+
+    @Test
+    public void canSelectExistingProduct() {
+        assertEquals(new Product("Coffee", 35), beverageMachine.selectProduct
+                ("Coffee"));
+    }
+
+    @Test
+    public void returnsNullIfProductNotExists() {
+        assertNull(beverageMachine.selectProduct("Ice tea"));
     }
 }
