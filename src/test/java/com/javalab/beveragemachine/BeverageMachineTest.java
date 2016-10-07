@@ -42,4 +42,21 @@ public class BeverageMachineTest {
     public void returnsNullIfProductNotExists() {
         assertNull(beverageMachine.selectProduct("Ice tea"));
     }
+
+    @Test
+    public void canReturnCoins() {
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(5);
+        beverageMachine.acceptCoin(5);
+        assertEquals(20, beverageMachine.returnInputCoins());
+    }
+
+    @Test
+    public void emptiesBalanceAfterCoinsReturn() {
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(5);
+        beverageMachine.acceptCoin(5);
+        beverageMachine.returnInputCoins();
+        assertEquals(0, beverageMachine.getBalance());
+    }
 }
