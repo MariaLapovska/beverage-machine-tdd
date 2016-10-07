@@ -24,17 +24,20 @@ public class BeverageMachine {
         return false;
     }
 
-    public Product selectProduct(String productName) {
-        for (Product product : assortment) {
-            if (product.getName().equals(productName)) {
-                return product;
-            }
+    public Sale performSale(String productName) {
+        Product selectedProduct = getProduct(productName);
+
+        if (selectedProduct == null) {
+            throw new IllegalArgumentException("Product doesn't exist!");
+        }
+        if (selectedProduct.getPrice() > balance) {
+            throw new RuntimeException("Not enough money for purchase!");
         }
 
-        return null;
+        return new Sale(selectedProduct, withdrawCoins());
     }
 
-    public int returnInputCoins() {
+    public int withdrawCoins() {
         int temp = balance;
         balance = 0;
 
@@ -43,5 +46,15 @@ public class BeverageMachine {
 
     public int getBalance() {
         return balance;
+    }
+
+    private Product getProduct(String productName) {
+        for (Product product : assortment) {
+            if (product.getName().equals(productName)) {
+                return product;
+            }
+        }
+
+        return null;
     }
 }

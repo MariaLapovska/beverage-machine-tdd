@@ -28,19 +28,8 @@ public class BeverageMachineTest {
     }
 
     @Test
-    public void canDeclineCoin() {
+    public void canDeclineCoinIfValueIsNotSupported() {
         assertEquals(false, beverageMachine.acceptCoin(7));
-    }
-
-    @Test
-    public void canSelectExistingProduct() {
-        assertEquals(new Product("Coffee", 35), beverageMachine.selectProduct
-                ("Coffee"));
-    }
-
-    @Test
-    public void returnsNullIfProductNotExists() {
-        assertNull(beverageMachine.selectProduct("Ice tea"));
     }
 
     @Test
@@ -48,7 +37,7 @@ public class BeverageMachineTest {
         beverageMachine.acceptCoin(10);
         beverageMachine.acceptCoin(5);
         beverageMachine.acceptCoin(5);
-        assertEquals(20, beverageMachine.returnInputCoins());
+        assertEquals(20, beverageMachine.withdrawCoins());
     }
 
     @Test
@@ -56,7 +45,62 @@ public class BeverageMachineTest {
         beverageMachine.acceptCoin(10);
         beverageMachine.acceptCoin(5);
         beverageMachine.acceptCoin(5);
-        beverageMachine.returnInputCoins();
+        beverageMachine.withdrawCoins();
         assertEquals(0, beverageMachine.getBalance());
+    }
+
+    @Test
+    public void canReturnProductAndChange() {
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(50);
+        beverageMachine.acceptCoin(5);
+
+        Sale sale = beverageMachine.performSale("Tea");
+
+        assertEquals(40, sale.returnChange());
+        assertEquals(new Product("Tea", 25), sale.getProduct());
+    }
+
+    @Test
+    public void emptiesBalanceAfterSale() {
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(50);
+        beverageMachine.acceptCoin(5);
+        beverageMachine.performSale("Tea");
+        assertEquals(0, beverageMachine.getBalance());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void throwsIllegalArgumentExceptionIfProductNotExist() {
+        beverageMachine.performSale("Ice tea");
+    }
+
+    @Test(expected=RuntimeException.class)
+    public void throwsRuntimeExceptionIfNotEnoughMoney() {
+        beverageMachine.performSale("Tea");
+    }
+
+    @Test
+    public void canPerformFewSalesInARow() {
+        beverageMachine.acceptCoin(50);
+
+        Sale sale = beverageMachine.performSale("Tea");
+        assertEquals(25, sale.returnChange());
+        assertEquals(new Product("Tea", 25), sale.getProduct());
+
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(50);
+
+        sale = beverageMachine.performSale("Coffee");
+        assertEquals(25, sale.returnChange());
+        assertEquals(new Product("Coffee", 35), sale.getProduct());
+
+        beverageMachine.acceptCoin(10);
+        beverageMachine.acceptCoin(25);
+        beverageMachine.acceptCoin(10);
+
+        sale = beverageMachine.performSale("Juice");
+        assertEquals(0, sale.returnChange());
+        assertEquals(new Product("Juice", 45), sale.getProduct());
     }
 }
