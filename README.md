@@ -12,4 +12,8 @@ Task
 Використовувати лише Java, без жодних фреймворків
 Непотрібно робити UI, достатньо командного рядку з меню
 Непотрібно робити Persistence
-Обов'язково додати UML діаграму класів
+Обов'язково додати UML діаграму класів  
+  
+Class diagram:  
+  
+  ![](https://github.com/MariaLapovska/beverage-machine-tdd/blob/master/class-diagram.png)
