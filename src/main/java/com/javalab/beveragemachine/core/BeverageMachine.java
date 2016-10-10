@@ -1,4 +1,7 @@
-package com.javalab.beveragemachine;
+package com.javalab.beveragemachine.core;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Mariia Lapovska
@@ -13,6 +16,10 @@ public class BeverageMachine {
         this.assortment = assortment;
     }
 
+    public int[] getCoinValues() {
+        return coinValues;
+    }
+
     public boolean acceptCoin(int value) {
         for (int coinValue : coinValues) {
             if (coinValue == value) {
@@ -22,6 +29,10 @@ public class BeverageMachine {
         }
 
         return false;
+    }
+
+    public Product[] allAssortment() {
+        return assortment;
     }
 
     public Sale performSale(String productName) {

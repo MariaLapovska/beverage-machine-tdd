@@ -1,4 +1,4 @@
-package com.javalab.beveragemachine;
+package com.javalab.beveragemachine.core;
 
 /**
  * @author Mariia Lapovska

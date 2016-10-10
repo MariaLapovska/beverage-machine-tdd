@@ -1,19 +1,19 @@
-package com.javalab.beveragemachine;
+package com.javalab.beveragemachine.core;
 
 /**
  * @author Mariia Lapovska
  */
 public class Sale {
     private Product product;
-    private int payedCoins;
+    private int payment;
 
-    public Sale(Product product, int payedCoins) {
+    public Sale(Product product, int payment) {
         this.product = product;
-        this.payedCoins = payedCoins;
+        this.payment = payment;
     }
 
     public int returnChange() {
-        return payedCoins - product.getPrice();
+        return payment - product.getPrice();
     }
 
     public Product getProduct() {
